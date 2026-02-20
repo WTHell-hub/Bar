@@ -1,0 +1,112 @@
+package Bar.service;
+
+import Bar.db.GestorDB;
+import Bar.model.Card;
+import javafx.scene.control.Alert;
+
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CardService {
+
+    public List<Card> CargarCardDB() {
+        List<Card> cards = new ArrayList<>();
+
+        try {
+            Connection conn = GestorDB.getConn();
+
+            PreparedStatement stmt = conn.prepareStatement(
+                    "SELECT * FROM cuenta WHERE estado = ?"
+            );
+
+            stmt.setString(1, "abierta");
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                LocalDateTime fecha = rs.getTimestamp("fecha").toLocalDateTime();
+                double total = Double.parseDouble(rs.getBigDecimal("total").toString());
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+                cards.add(new Card(id, nombre, fecha.format(formatter), total));
+            }
+
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error de base de datos");
+            alert.setHeaderText("No se pudo cerrar la cuenta");
+            alert.setContentText("Fallo de la comunicación con la base de datos");
+            alert.showAndWait();
+
+            throw new RuntimeException(e.getMessage());
+        }
+
+        return cards;
+    }
+
+    public int GuardarCuentaDB(String nombre) {
+        try {
+            Connection conn = GestorDB.getConn();
+
+            PreparedStatement stmt = conn.prepareStatement(
+                    "INSERT INTO cuenta (nombre, fecha, estado, total) VALUES (?,?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+
+            stmt.setString(1, nombre);
+            stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.setString(3, "abierta");
+            stmt.setDouble(4, 0.0);
+
+            stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            int id = -1;
+            while (rs.next()) {
+                id = rs.getInt(1);
+            }
+
+            return id;
+
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error de base de datos");
+            alert.setHeaderText("Error al guardar la cuenta");
+            alert.setContentText("Fallo de la comunicación con la base de datos");
+            alert.showAndWait();
+
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void CerrarCuentaDB(Integer id) {
+        try {
+            Connection conn = GestorDB.getConn();
+
+            PreparedStatement stmt = conn.prepareStatement(
+                    "UPDATE cuenta set estado = ? WHERE id = ? AND estado = ?"
+            );
+
+            stmt.setString(1, "cerrada");
+            stmt.setInt(2, id);
+            stmt.setString(3, "abierta");
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error de base de datos");
+            alert.setHeaderText("Error al cerrar la cuenta");
+            alert.setContentText("Fallo de la comunicación con la base de datos");
+            alert.showAndWait();
+
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+}
