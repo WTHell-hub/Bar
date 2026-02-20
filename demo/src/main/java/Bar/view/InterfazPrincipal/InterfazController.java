@@ -18,8 +18,8 @@ import java.util.Optional;
 public class InterfazController {
 
     @FXML private FlowPane flowPane;
-    @FXML private TilePane listaProductos;
-    @FXML private TableView<Producto> table;
+    @FXML private TilePane tilePane;
+    @FXML private TableView<Producto> tableView;
     @FXML private TextField buscar;
     @FXML private ComboBox<String> filtro;
     @FXML private Button btnCerrar;
@@ -33,7 +33,7 @@ public class InterfazController {
         cuentaManager = new CuentaManager(flowPane);
         cuentaManager.CargarCuenta();
 
-        productoManager = new ProductoManager(listaProductos);
+        productoManager = new ProductoManager(tilePane, tableView);
         productoManager.CargarProductos();
     }
 

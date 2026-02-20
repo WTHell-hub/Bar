@@ -52,10 +52,9 @@ public class CuentaManager {
 
             //Creación del menú desplegable y de las funciones que va a tener
             ContextMenu menu = new ContextMenu();
-            MenuItem agregar = new MenuItem("Agregar");
             MenuItem cerrar = new MenuItem("Cerrar");
 
-            menu.getItems().addAll(agregar, cerrar);
+            menu.getItems().addAll(cerrar);
 
             //Función a los botones del menú desplegable
             cerrar.setOnAction(_ -> {

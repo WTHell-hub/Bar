@@ -7,19 +7,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductoManager {
     private final ProductoService service = new ProductoService();
     private final TilePane tilePane;
+    private final TableManager tableManager;
 
-    public ProductoManager(TilePane tilePane) {
+    public ProductoManager(TilePane tilePane, TableView<Producto> tableView) {
         this.tilePane = tilePane;
+        this.tableManager = new TableManager(tableView);
     }
 
     public void CargarProductos() throws IOException {
@@ -48,6 +50,10 @@ public class ProductoManager {
             MenuItem agregar = new MenuItem("Agregar");
 
             menu.getItems().add(agregar);
+
+            agregar.setOnAction(_ -> {
+                tableManager.AggProductoALaCuenta(vm);
+            });
 
             menu.show(pane, e.getScreenX(), e.getScreenY());
         });
