@@ -1,0 +1,15 @@
+#Archivos compilados
+*.class
+*.log
+
+#Carpeta de salida
+/out/
+/target/
+
+#Configuración de Intellij
+.idea/
+*.iml
+
+#Librerias externas
+**/libs/
+*.jar
