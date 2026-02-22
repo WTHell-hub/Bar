@@ -5,19 +5,18 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="hBox" prefHeight="962.0" prefWidth="1252.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Bar.view.InterfazPrincipal.InterfazController">
+<HBox fx:id="hBox" prefHeight="962.0" prefWidth="1552.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Bar.view.InterfazPrincipal.InterfazController">
    <children>
       <ScrollPane fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="805.0" prefWidth="680.0" styleClass="tool-bar" stylesheets="@../styles/BordeRedondeado.css">
          <content>
@@ -49,20 +48,8 @@
          </padding>
       </ScrollPane>
       <BorderPane prefHeight="671.0" prefWidth="282.0" HBox.hgrow="ALWAYS">
-         <left>
-            <TableView fx:id="tableView" prefHeight="843.0" prefWidth="267.0" styleClass="tool-bar" stylesheets="@../styles/BordeRedondeado.css" BorderPane.alignment="CENTER">
-              <columns>
-                <TableColumn fx:id="colProducto" prefWidth="92.0" styleClass="tool-bar" text="Producto" />
-                <TableColumn fx:id="colCantidad" editable="false" prefWidth="89.0" styleClass="tool-bar" text="Cantidad" />
-                  <TableColumn fx:id="colPrecio" prefWidth="62.0" styleClass="tool-bar" text="Precio" />
-              </columns>
-               <BorderPane.margin>
-                  <Insets top="5.0" />
-               </BorderPane.margin>
-            </TableView>
-         </left>
          <right>
-            <VBox fx:id="panelProducto" prefHeight="908.0" prefWidth="268.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="panelProducto" prefHeight="908.0" prefWidth="268.0" visible="false" BorderPane.alignment="CENTER">
                <children>
                   <HBox prefHeight="40.0" prefWidth="268.0">
                      <children>
@@ -82,7 +69,7 @@
                      <content>
                         <TilePane fx:id="tilePane" prefHeight="820.0" prefWidth="244.0">
                            <padding>
-                              <Insets left="5.0" top="5.0" />
+                              <Insets left="5.0" right="5.0" top="5.0" />
                            </padding></TilePane>
                      </content>
                   </ScrollPane>
@@ -97,6 +84,73 @@
                </items>
             </ToolBar>
          </bottom>
+         <left>
+            <VBox prefHeight="908.0" prefWidth="271.0" BorderPane.alignment="CENTER">
+               <children>
+                  <StackPane prefHeight="49.0" prefWidth="179.0">
+                     <children>
+                        <Label text="Productos asociados">
+                           <font>
+                              <Font name="Book Antiqua" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </StackPane>
+                  <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="tool-bar" stylesheets="@../styles/BordeRedondeado.css" VBox.vgrow="ALWAYS">
+                     <content>
+                        <TilePane fx:id="tilePanePA" minHeight="833.0" minWidth="185.0" prefHeight="833.0" prefWidth="247.0">
+                           <padding>
+                              <Insets left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </TilePane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <VBox fx:id="panelObjTemp" prefHeight="908.0" prefWidth="284.0" visible="false" BorderPane.alignment="CENTER">
+               <children>
+                  <StackPane prefHeight="62.0" prefWidth="333.0">
+                     <children>
+                        <Label text="Agregando Productos">
+                           <font>
+                              <Font name="Book Antiqua" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </StackPane>
+                  <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="tool-bar" stylesheets="@../styles/BordeRedondeado.css" VBox.vgrow="ALWAYS">
+                     <content>
+                        <TilePane fx:id="tilePaneObjTemp" prefHeight="751.0" prefWidth="309.0" />
+                     </content>
+                  </ScrollPane>
+                  <HBox prefHeight="0.0" prefWidth="333.0" spacing="60.0" styleClass="tool-bar" stylesheets="@../styles/BordeRedondeado.css">
+                     <children>
+                        <Button fx:id="btnAceptar" mnemonicParsing="false" prefHeight="28.0" prefWidth="104.0" styleClass="card" stylesheets="@../styles/Cards.css" text="Aceptar">
+                           <font>
+                              <Font name="Book Antiqua" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnCancelar" mnemonicParsing="false" prefHeight="0.0" prefWidth="102.0" styleClass="card" stylesheets="@../styles/Cards.css" text="Cancelar">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Book Antiqua" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </center>
       </BorderPane>
    </children>
 </HBox>

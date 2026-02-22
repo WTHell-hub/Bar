@@ -20,4 +20,6 @@ module src.fromcontroller.demo {
     opens Bar.view.InterfazPrincipal to javafx.fxml;
     exports Bar.view.InterfazAlmacen;
     opens Bar.view.InterfazAlmacen to javafx.fxml;
+    exports Bar.view.InterfazPrincipal.PanelProductos;
+    opens Bar.view.InterfazPrincipal.PanelProductos to javafx.fxml;
 }
