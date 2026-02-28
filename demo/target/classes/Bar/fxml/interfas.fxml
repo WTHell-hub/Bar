@@ -16,17 +16,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="hBox" prefHeight="962.0" prefWidth="1552.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Bar.view.InterfazPrincipal.InterfazController">
+<HBox fx:id="hBox" prefHeight="962.0" prefWidth="1552.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Bar.view.InterfazPrincipal.StagePrincipal.InterfazController">
    <children>
       <ScrollPane fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="805.0" prefWidth="680.0" styleClass="tool-bar" stylesheets="@../styles/BordeRedondeado.css">
          <content>
-            <FlowPane fx:id="flowPane" hgap="4.0" maxWidth="-Infinity" minHeight="430.0" minWidth="320.0" prefHeight="931.0" prefWidth="670.0" prefWrapLength="650.0" rowValignment="TOP" vgap="10.0">
+            <FlowPane fx:id="paneCuentas" hgap="4.0" maxWidth="-Infinity" minHeight="430.0" minWidth="320.0" prefHeight="931.0" prefWidth="670.0" prefWrapLength="650.0" rowValignment="TOP" vgap="10.0">
                <children>
-                  <Pane fx:id="btnAddCard" onMouseClicked="#onAddCardClick" prefHeight="100.0" prefWidth="150.0" styleClass="card" stylesheets="@../styles/Cards.css">
+                  <Pane fx:id="btnAddCard" onMouseClicked="#onAddCardClick" prefHeight="109.0" prefWidth="200.0" styleClass="card" stylesheets="@../styles/Cards.css">
                      <children>
-                        <Label layoutX="55.0" layoutY="8.0" text="+">
+                        <Label layoutX="83.0" prefHeight="55.0" prefWidth="33.0" text="+">
                            <font>
                               <Font name="Calibri Light" size="67.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="40.0" layoutY="77.0" text="Nueva Cuenta">
+                           <font>
+                              <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Label>
                      </children>
@@ -53,12 +58,12 @@
                <children>
                   <HBox prefHeight="40.0" prefWidth="268.0">
                      <children>
-                        <TextField fx:id="buscar" prefHeight="25.0" prefWidth="182.0" promptText="Buscar" styleClass="card" stylesheets="@../styles/Cards.css" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="buscar" prefHeight="41.0" prefWidth="192.0" promptText="Buscar" styleClass="card" stylesheets="@../styles/Cards.css" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <ComboBox fx:id="filtro" prefHeight="11.0" prefWidth="86.0" styleClass="card" stylesheets="@../styles/Cards.css" HBox.hgrow="ALWAYS">
+                        <ComboBox fx:id="filtro" prefHeight="49.0" prefWidth="155.0" styleClass="card" stylesheets="@../styles/Cards.css" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
@@ -67,7 +72,7 @@
                   </HBox>
                   <ScrollPane fitToWidth="true" prefHeight="854.0" prefWidth="248.0" styleClass="tool-bar" stylesheets="@../styles/BordeRedondeado.css" VBox.vgrow="ALWAYS">
                      <content>
-                        <TilePane fx:id="tilePane" prefHeight="820.0" prefWidth="244.0">
+                        <TilePane fx:id="paneProductos" prefHeight="820.0" prefWidth="244.0">
                            <padding>
                               <Insets left="5.0" right="5.0" top="5.0" />
                            </padding></TilePane>
@@ -85,11 +90,11 @@
             </ToolBar>
          </bottom>
          <left>
-            <VBox prefHeight="908.0" prefWidth="271.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="panelPA" prefHeight="908.0" prefWidth="271.0" visible="false" BorderPane.alignment="CENTER">
                <children>
                   <StackPane prefHeight="49.0" prefWidth="179.0">
                      <children>
-                        <Label text="Productos asociados">
+                        <Label fx:id="lblNombreCuenta" text="Productos asociados">
                            <font>
                               <Font name="Book Antiqua" size="18.0" />
                            </font>
@@ -127,7 +132,7 @@
                   </ScrollPane>
                   <HBox prefHeight="0.0" prefWidth="333.0" spacing="60.0" styleClass="tool-bar" stylesheets="@../styles/BordeRedondeado.css">
                      <children>
-                        <Button fx:id="btnAceptar" mnemonicParsing="false" prefHeight="28.0" prefWidth="104.0" styleClass="card" stylesheets="@../styles/Cards.css" text="Aceptar">
+                        <Button fx:id="btnAceptar" mnemonicParsing="false" onMouseClicked="#onAceptarClicked" prefHeight="28.0" prefWidth="104.0" styleClass="card" stylesheets="@../styles/Cards.css" text="Aceptar">
                            <font>
                               <Font name="Book Antiqua" size="12.0" />
                            </font>
@@ -135,7 +140,7 @@
                               <Insets left="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="btnCancelar" mnemonicParsing="false" prefHeight="0.0" prefWidth="102.0" styleClass="card" stylesheets="@../styles/Cards.css" text="Cancelar">
+                        <Button fx:id="btnCancelar" mnemonicParsing="false" onMouseClicked="#onCancelarClicked" prefHeight="0.0" prefWidth="102.0" styleClass="card" stylesheets="@../styles/Cards.css" text="Cancelar">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>

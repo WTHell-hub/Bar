@@ -3,23 +3,21 @@ package Bar.viewModel;
 import Bar.model.Producto;
 import javafx.beans.property.*;
 
-public class ProductoViewModel {
-    IntegerProperty id = new SimpleIntegerProperty();
+public class CardPAViewModel {
     StringProperty nombre = new SimpleStringProperty();
     DoubleProperty cantidad = new SimpleDoubleProperty();
     DoubleProperty precio = new SimpleDoubleProperty();
     StringProperty categoria = new SimpleStringProperty();
 
-    public ProductoViewModel(Producto producto) {
-        id.set(producto.getId());
+    public CardPAViewModel(Producto producto) {
         nombre.set(producto.getNombre());
         cantidad.set(producto.getCantidad());
         precio.set(producto.getPrecio());
         categoria.set(producto.getCategoria());
     }
 
-    public IntegerProperty idProperty() {
-        return id;
+    public DoubleProperty cantidadProperty() {
+        return cantidad;
     }
 
     public StringProperty nombreProperty() {
@@ -30,12 +28,12 @@ public class ProductoViewModel {
         return precio;
     }
 
-    public int getId() {
-        return id.get();
+    public double getCantidad() {
+        return cantidad.get();
     }
 
-    public void setId(int id) {
-        this.id.set(id);
+    public void setCantidad(int cantidad) {
+        this.cantidad.set(cantidad);
     }
 
     public String getNombre() {
@@ -52,14 +50,6 @@ public class ProductoViewModel {
 
     public void setPrecio(double precio) {
         this.precio.set(precio);
-    }
-
-    public double getCantidad() {
-        return cantidad.get();
-    }
-
-    public DoubleProperty cantidadProperty() {
-        return cantidad;
     }
 
     public void setCantidad(double cantidad) {

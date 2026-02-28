@@ -6,22 +6,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="100.0" prefWidth="150.0" styleClass="card" stylesheets="@../styles/Cards.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<VBox onMouseClicked="#onMouseClicked" prefHeight="109.0" prefWidth="200.0" styleClass="card" stylesheets="@../styles/Cards.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Bar.view.InterfazPrincipal.Cuentas.CuentaController">
    <children>
       <StackPane prefHeight="38.0" prefWidth="125.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label fx:id="lblNombre" text="Nombre" textAlignment="CENTER">
+            <Label fx:id="lblNombre" alignment="CENTER" contentDisplay="CENTER" text="Nombre" textAlignment="CENTER">
                <font>
-                  <Font name="Bradley Hand ITC" size="18.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
          </children>
       </StackPane>
       <StackPane prefHeight="38.0" prefWidth="125.0">
          <children>
-            <Label fx:id="lblFecha" text="Fecha">
+            <Label fx:id="lblFecha" prefHeight="39.0" prefWidth="52.0" text="Fecha">
                <font>
-                  <Font name="Bradley Hand ITC" size="18.0" />
+                  <Font name="Book Antiqua" size="20.0" />
                </font>
             </Label>
          </children>
@@ -30,9 +30,10 @@
          <children>
             <Label fx:id="lblConsumo" text="Consumo">
                <font>
-                  <Font name="Bradley Hand ITC" size="18.0" />
+                  <Font name="Book Antiqua" size="18.0" />
                </font>
             </Label>
+            <Label fx:id="ID" text="ID" visible="false" />
          </children>
       </StackPane>
    </children>

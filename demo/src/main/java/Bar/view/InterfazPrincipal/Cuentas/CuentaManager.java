@@ -1,17 +1,16 @@
-package Bar.view.InterfazPrincipal;
+package Bar.view.InterfazPrincipal.Cuentas;
 
 import Bar.Animaciones.AnimacionesUI;
+import Bar.context.UIContext;
 import Bar.model.Card;
 import Bar.service.CardService;
 import Bar.view.InterfazPrincipal.PanelProductos.ProductoManager;
 import Bar.viewModel.CuentaViewModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,12 +19,15 @@ import java.util.Map;
 
 public class CuentaManager {
     private final CardService service = new CardService();
-    private final FlowPane flowPane;
-    private final Map<String, Object> componentes;
+    private final FlowPane paneCuentas;
+    private final UIContext uiContext;
+    private final ProductoManager productoManager;
+    private Map<Integer, CuentaController> controllers = new HashMap<>();
 
-    public CuentaManager(Map<String, Object> componentes) {
-        this.flowPane = (FlowPane) componentes.get("flowPane");
-        this.componentes = new HashMap<>(componentes);
+    public CuentaManager(UIContext uiContext, ProductoManager productoManager) {
+        this.paneCuentas = uiContext.getPaneCuentas();
+        this.uiContext = uiContext;
+        this.productoManager = productoManager;
     }
 
     public void CargarCuenta() throws IOException {
@@ -43,16 +45,10 @@ public class CuentaManager {
         Pane card = loader.load();
 
         //Asignación de valores
-        Label lblNombre = (Label) card.lookup("#lblNombre");
-        lblNombre.textProperty().bind(vm.nombreProperty());
+        CuentaController controller = loader.getController();
 
-        Label lblFecha = (Label) card.lookup("#lblFecha");
-        lblFecha.textProperty().bind(vm.fechaProperty());
-
-        Label lblConsumo = (Label) card.lookup("#lblConsumo");
-        lblConsumo.textProperty().bind(vm.totalProperty().asString());
-
-        card.setUserData(vm);
+        controller.setData(vm, uiContext, productoManager);
+        controllers.put(vm.idProperty().get(), controller);
 
         //Agregar el menú desplegable de cada card
         card.setOnContextMenuRequested(e -> {
@@ -60,42 +56,32 @@ public class CuentaManager {
             //Creación del menú desplegable y de las funciones que va a tener
             ContextMenu menu = new ContextMenu();
             MenuItem cerrar = new MenuItem("Cerrar");
-            MenuItem agregar = new MenuItem("Agregar");
 
-            menu.getItems().addAll(cerrar, agregar);
+            menu.getItems().addAll(cerrar);
 
             //Función a los botones del menú desplegable
             cerrar.setOnAction(_ -> {
-                CuentaViewModel viewModel = (CuentaViewModel) card.getUserData();
 
-                service.CerrarCuentaDB(viewModel.idProperty().getValue());
-                flowPane.getChildren().remove(card);
-            });
+                service.CerrarCuentaDB(vm.idProperty().getValue());
 
-            agregar.setOnAction(_ -> {
-                VBox panelProducto = (VBox) componentes.get("panelProducto");
-                ProductoManager productoManager = (ProductoManager) componentes.get("productoManager");
-
-                AnimacionesUI.slideInFromRight(panelProducto, 500, 300);
-
-                try {
-                    productoManager.BorrarElementos();
-
-                    productoManager.CargarProductos();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                paneCuentas.getChildren().remove(card);
             });
 
             menu.show(card, e.getScreenX(), e.getScreenY());
         });
 
-        flowPane.getChildren().add(card);
+        paneCuentas.getChildren().add(card);
 
         AnimacionesUI.slideInFromRight(card, 100, -160);
     }
 
     public int GuardarCuenta(String nombre) {
         return service.GuardarCuentaDB(nombre);
+    }
+
+    public void ActualizarTotal(int id, double total) {
+        CuentaController controller = controllers.get(id);
+
+        controller.ActualizarTotal(total);
     }
 }

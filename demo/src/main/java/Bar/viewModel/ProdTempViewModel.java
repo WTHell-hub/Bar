@@ -3,18 +3,20 @@ package Bar.viewModel;
 import Bar.model.Producto;
 import javafx.beans.property.*;
 
-public class ProductoViewModel {
+public class ProdTempViewModel {
     IntegerProperty id = new SimpleIntegerProperty();
     StringProperty nombre = new SimpleStringProperty();
     DoubleProperty cantidad = new SimpleDoubleProperty();
     DoubleProperty precio = new SimpleDoubleProperty();
+    DoubleProperty total = new SimpleDoubleProperty();
     StringProperty categoria = new SimpleStringProperty();
 
-    public ProductoViewModel(Producto producto) {
+    public ProdTempViewModel(Producto producto) {
         id.set(producto.getId());
         nombre.set(producto.getNombre());
         cantidad.set(producto.getCantidad());
         precio.set(producto.getPrecio());
+        total.set(producto.getCantidad() * producto.getPrecio());
         categoria.set(producto.getCategoria());
     }
 
@@ -64,6 +66,14 @@ public class ProductoViewModel {
 
     public void setCantidad(double cantidad) {
         this.cantidad.set(cantidad);
+    }
+
+    public double getTotal() {
+        return total.get();
+    }
+
+    public DoubleProperty totalProperty() {
+        return total;
     }
 
     public String getCategoria() {

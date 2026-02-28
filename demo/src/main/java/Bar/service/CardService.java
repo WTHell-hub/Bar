@@ -109,4 +109,22 @@ public class CardService {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    public void ActualizarTotal(int idCuenta, double total) {
+        try {
+            Connection conn = GestorDB.getConn();
+
+            PreparedStatement stmt = conn.prepareStatement(
+                    "UPDATE cuenta SET total = ? WHERE id = ?"
+            );
+
+            stmt.setDouble(1, total);
+            stmt.setInt(2, idCuenta);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

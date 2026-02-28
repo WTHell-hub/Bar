@@ -1,9 +1,14 @@
-    package Bar.view.InterfazPrincipal;
+    package Bar.view.InterfazPrincipal.StagePrincipal;
 
+    import Bar.Animaciones.AnimacionesUI;
+    import Bar.context.UIContext;
     import Bar.model.Card;
+    import Bar.model.Producto;
+    import Bar.view.InterfazPrincipal.Cuentas.CuentaManager;
     import Bar.view.InterfazPrincipal.PanelProductos.ProductoManager;
     import Bar.viewModel.CuentaViewModel;
     import javafx.fxml.FXML;
+    import javafx.scene.Node;
     import javafx.scene.control.*;
     import javafx.scene.input.MouseEvent;
     import javafx.scene.layout.FlowPane;
@@ -14,14 +19,12 @@
     import java.io.IOException;
     import java.time.LocalDateTime;
     import java.time.format.DateTimeFormatter;
-    import java.util.HashMap;
-    import java.util.Map;
-    import java.util.Optional;
+    import java.util.*;
 
     public class InterfazController {
 
-        @FXML private FlowPane flowPane;
-        @FXML private TilePane tilePane;
+        @FXML private FlowPane paneCuentas;
+        @FXML private TilePane paneProductos;
         @FXML private TilePane tilePanePA;
         @FXML private TextField buscar;
         @FXML private ComboBox<String> filtro;
@@ -32,33 +35,39 @@
         @FXML private TilePane tilePaneObjTemp;
         @FXML private Button btnAceptar;
         @FXML private Button btnCancelar;
+        @FXML private VBox panelPA;
+        @FXML private Label lblNombreCuenta;
 
-        private final Map<String, Object> componentes = new HashMap<>();
+        private UIContext uiContext;
 
         private CuentaManager cuentaManager;
         private ProductoManager productoManager;
-        private TilePanePAManager tilePanePAManager;
 
 
         public void initialize() throws IOException {
-            componentes.put("flowPane", flowPane);
-            componentes.put("tilePane", tilePane);
-            componentes.put("tilePanePA", tilePanePA);
-            componentes.put("panelProducto", panelProducto);
-            componentes.put("buscar", buscar);
-            componentes.put("filtro", filtro);
-            componentes.put("paneObjTemp", panelObjTemp);
-            componentes.put("tilePaneObjTemp", tilePaneObjTemp);
-            componentes.put("btnAceptar", btnAceptar);
-            componentes.put("btnCancelar", btnCancelar);
+            uiContext = new UIContext(paneCuentas, paneProductos, tilePanePA, buscar, filtro,
+                    btnCerrar, btnAggProducto, panelProducto, panelObjTemp, tilePaneObjTemp,
+                    btnAceptar, btnCancelar, panelPA, lblNombreCuenta);
 
-            productoManager = new ProductoManager(componentes);
-            componentes.put("productoManager", productoManager);
-            cuentaManager = new CuentaManager(componentes);
-
+            //Creamos ambas, como las dos se necesitan entre sí, lo que hago es ponerle un seter a la primera, ya que si lo paso por el constructor sale una referencia null
+            productoManager = new ProductoManager(uiContext);
+            cuentaManager = new CuentaManager(uiContext, productoManager);
+            productoManager.setCuentaManager(cuentaManager);
 
             cuentaManager.CargarCuenta();
-            productoManager.CargarProductos();
+
+            buscar.textProperty().addListener((obj, oldValue, newValue)-> productoManager.FiltrarProductos(newValue));
+
+            filtro.getItems().addAll("Todos", "Comidas", "Bebidas", "Postres");
+            filtro.setValue("Todos");
+
+            filtro.valueProperty().addListener((obj, oldValue, newValue) -> {
+                if (newValue.equals("Todos")) {
+                    productoManager.MostrarTodosLosProductos();
+                } else {
+                    productoManager.MostrarConFiltro(newValue);
+                }
+            });
         }
 
         @FXML
@@ -83,6 +92,19 @@
         }
 
         @FXML
+        private void onAceptarClicked() {
+            productoManager.VincularProductos();
+            productoManager.ActualizarCuentas();
+        }
+
+        @FXML
+        private void onCancelarClicked() {
+            AnimacionesUI.slideOutToRight(panelObjTemp, 100, 200);
+            AnimacionesUI.slideOutToRight(panelProducto, 100, 200);
+            AnimacionesUI.slideOutToRight(panelPA, 100, 200);
+        }
+
+        @FXML
         private void onClosedCuenta(MouseEvent event) {
             // lógica para cerrar la cuenta
         }
@@ -91,5 +113,4 @@
         private void onAddProducto(MouseEvent event) {
             // lógica para sacar la interfaz de los productos
         }
-
     }
