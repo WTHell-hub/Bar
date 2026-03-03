@@ -37,6 +37,13 @@
         @FXML private Button btnCancelar;
         @FXML private VBox panelPA;
         @FXML private Label lblNombreCuenta;
+        @FXML private VBox panelRetirarProducto;
+        @FXML private TextField txfCantidad;
+        @FXML private RadioButton rbHecho;
+        @FXML private RadioButton rbNoHecho;
+        @FXML private TextArea txtAreaJustificacion;
+        @FXML private Button btnAceptarEliminacion;
+        @FXML private Button btnCancelarEliminacion;
 
         private UIContext uiContext;
 
@@ -47,7 +54,8 @@
         public void initialize() throws IOException {
             uiContext = new UIContext(paneCuentas, paneProductos, tilePanePA, buscar, filtro,
                     btnCerrar, btnAggProducto, panelProducto, panelObjTemp, tilePaneObjTemp,
-                    btnAceptar, btnCancelar, panelPA, lblNombreCuenta);
+                    btnAceptar, btnCancelar, panelPA, lblNombreCuenta, panelRetirarProducto,
+                    txfCantidad, rbHecho, rbNoHecho, txtAreaJustificacion, btnAceptarEliminacion, btnCancelarEliminacion);
 
             //Creamos ambas, como las dos se necesitan entre sí, lo que hago es ponerle un seter a la primera, ya que si lo paso por el constructor sale una referencia null
             productoManager = new ProductoManager(uiContext);
@@ -102,6 +110,7 @@
             AnimacionesUI.slideOutToRight(panelObjTemp, 100, 200);
             AnimacionesUI.slideOutToRight(panelProducto, 100, 200);
             AnimacionesUI.slideOutToRight(panelPA, 100, 200);
+            AnimacionesUI.slideOutToRight(panelRetirarProducto, 100, 200);
         }
 
         @FXML

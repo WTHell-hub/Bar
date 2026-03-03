@@ -31,7 +31,7 @@ public class CuentaController {
 
         this.uiContext = uiContext;
         this.productoManager = productoManager;
-        productosAsociados = new ProductosAsociados(uiContext);
+        productosAsociados = new ProductosAsociados(uiContext, productoManager.getCuentaManager());
         this.vm = vm;
     }
 
@@ -53,6 +53,19 @@ public class CuentaController {
             AnimacionesUI.slideInFromRight(panelPA, 100, 400);
             uiContext.getLblNombreCuenta().setText("Cuenta: "+lblNombre.getText());
             productosAsociados.CargarProductosAsociados(Integer.parseInt(ID.getText()));
+
+            //Esto lo hacemos para que al cambiar de cuenta funcione también como un cancelar del panel para retirar productos, ya que no se estaría tratando con la nueva cuenta
+            VBox panelRetirarProducto = uiContext.getPanelRetirarProducto();
+            if (panelRetirarProducto.isVisible()) {
+                AnimacionesUI.slideOutToRight(panelRetirarProducto, 100, 200);
+            }
+
+            //Se hace para que cuando se cambie de cuenta asegurarse que los objetos temporales sean de esa cuenta
+            //además de que se ve feo q el tilePane se quede inmóvil mientras se cambia de cuenta
+            VBox paneObjTemp = uiContext.getPaneObjTemp();
+            if (tilePaneObjTemp.isVisible()) {
+                AnimacionesUI.slideOutToRight(paneObjTemp, 100, 200);
+            }
 
         } catch (IOException ex) {
             throw new RuntimeException(ex);

@@ -22,7 +22,7 @@ public class HelloAplication extends Application{
         Parent root = loader.load();
         Scene scene = new Scene(root, 800, 600);
 
-        stage.setTitle("hola");
+        stage.setTitle("Bar 3era y D");
         stage.setScene(scene);
 
         PrevenirAlCerrar(stage);

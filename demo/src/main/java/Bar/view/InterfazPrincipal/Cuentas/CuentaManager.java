@@ -30,12 +30,16 @@ public class CuentaManager {
         this.productoManager = productoManager;
     }
 
-    public void CargarCuenta() throws IOException {
+    public void CargarCuenta() {
         List<Card> cards = service.CargarCardDB();
 
         for (Card c: cards) {
             CuentaViewModel vm = new CuentaViewModel(c);
-            MostrarCard(vm);
+            try {
+                MostrarCard(vm);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -83,5 +87,9 @@ public class CuentaManager {
         CuentaController controller = controllers.get(id);
 
         controller.ActualizarTotal(total);
+    }
+
+    public void BorrarCuentas() {
+        paneCuentas.getChildren().clear();
     }
 }

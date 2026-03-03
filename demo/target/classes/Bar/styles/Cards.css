@@ -6,7 +6,7 @@
     -fx-border-color: #333;
     -fx-border-width: 2;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0.5, 0, 0);
-    -fx-padding: 10; /* espacio interno */
+    -fx-padding: 7; /* espacio interno */
     -fx-alignment: center;
 }
 

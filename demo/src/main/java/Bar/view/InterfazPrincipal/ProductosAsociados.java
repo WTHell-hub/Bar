@@ -3,31 +3,47 @@ package Bar.view.InterfazPrincipal;
 import Bar.Animaciones.AnimacionesUI;
 import Bar.context.UIContext;
 import Bar.model.Producto;
+import Bar.service.CardService;
+import Bar.service.ProductoService;
 import Bar.service.ProductoXCuentaService;
+import Bar.view.InterfazPrincipal.Cuentas.CuentaManager;
 import Bar.viewModel.CardPAViewModel;
+import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ProductosAsociados {
     private final TilePane tilePanePA;
     private final ProductoXCuentaService service = new ProductoXCuentaService();
     private List<Producto> productos = new ArrayList<>();
+    private UIContext uiContext;
+    private int idCuenta;
+    private CuentaManager cuentaManager;
 
-    public ProductosAsociados(UIContext uiContext) {
+    public ProductosAsociados(UIContext uiContext, CuentaManager cuentaManager) {
         this.tilePanePA = uiContext.getTilePanePA();
+        this.uiContext = uiContext;
+        this.cuentaManager = cuentaManager;
     }
 
-    public void CargarProductosAsociados(int id) throws IOException {
+    public void CargarProductosAsociados(int idCuenta) throws IOException {
         productos.clear();
-        productos.addAll(service.ObtenerProductos(id));
+        productos.addAll(service.ObtenerProductos(idCuenta));
+        this.idCuenta = idCuenta;
 
         tilePanePA.getChildren().clear();
 
@@ -53,8 +69,101 @@ public class ProductosAsociados {
         Label lblCategoria = (Label) pane.lookup("#lblCategoria");
         lblCategoria.textProperty().bind(vm.categoriaProperty());
 
+        pane.setOnContextMenuRequested(e -> {
+            ContextMenu menu = new ContextMenu();
+            MenuItem eliminar = new MenuItem("Eliminar");
+            menu.getItems().add(eliminar);
+
+            eliminar.setOnAction(_ -> {
+                VBox panelRetirarProducto = uiContext.getPanelRetirarProducto();
+                VBox panelObjTemp = uiContext.getPaneObjTemp();
+
+                if (panelObjTemp.isVisible()) {
+                    AnimacionesUI.slideOutToRight(panelObjTemp, 100, 200);
+                    panelObjTemp.setManaged(false);
+                }
+
+                panelRetirarProducto.setManaged(true);
+                AnimacionesUI.slideInFromRight(panelRetirarProducto, 100, 200);
+
+                ProcesoDeEliminacion(vm.getNombre(), vm.cantidadProperty(), vm.precioProperty());
+            });
+
+            menu.show(pane, e.getScreenX(), e.getScreenY());
+        });
+
         tilePanePA.getChildren().add(pane);
 
         AnimacionesUI.fadeIn(pane, 200);
+    }
+
+    private void ProcesoDeEliminacion(String nombre, DoubleProperty vmCantidad, DoubleProperty vmPrecio) {
+        Button btnAceptarEliminacion = uiContext.getBtnAceptarEliminacion();
+        Button btnCancelarEliminacion = uiContext.getBtnCancelarEliminacion();
+        TextField txfCantidad = uiContext.getTxfCantidad();
+
+        LimpiarComponentes();
+
+        btnAceptarEliminacion.setDisable(true);
+
+        txfCantidad.textProperty().addListener((_, _, _) -> {
+            try {
+                int valorIngresado = Integer.parseInt(txfCantidad.getText());
+
+                if (valorIngresado > 0) {
+                    btnAceptarEliminacion.setDisable(false);
+                }
+            } catch (RuntimeException e) {
+                txfCantidad.setText("");
+                btnAceptarEliminacion.setDisable(true);
+            }
+        });
+
+        btnAceptarEliminacion.setOnAction(_ -> Aceptar(nombre, vmCantidad, vmPrecio, Integer.parseInt(txfCantidad.getText())));
+
+    }
+
+    public void LimpiarComponentes() {
+        TextField txfCantidad = uiContext.getTxfCantidad();
+        TextArea txtAreaJustificacion = uiContext.getTxtAreaJustificacion();
+
+        txfCantidad.setText("");
+        txtAreaJustificacion.setText("");
+    }
+
+    public void Aceptar(String nombre, DoubleProperty vmCantidad, DoubleProperty vmPrecio, int valorIngresado) {
+        TextArea txtAreaJustificacion = uiContext.getTxtAreaJustificacion();
+        RadioButton rbHecho = uiContext.getRbHecho();
+
+        if (rbHecho.isSelected()) {
+            //Se encarga de borrar de la tabla detallecuenta para quitar las referencias de los productos a la cuenta
+            int idProducto = service.QuitarProductoDeLaCuenta(idCuenta, nombre, valorIngresado);
+            //En caso de que los productos que borramos lleguen a 0 este se encarga de borrarlo para que no salga en los productos agregados
+            service.BorrarVinculosNulos();
+
+            //Se encarga de bajar el contador de los productos agregados en caso de que no desaparezcan por completo
+            vmCantidad.set(vmCantidad.get() - valorIngresado);
+
+            //Se utiliza el service de los productos para poder calcular el total directamente desde la base de datos
+            ProductoService productoService = new ProductoService();
+            double total = productoService.CalcularTotal(idCuenta);
+
+            CardService cardService = new CardService();
+
+            //Se encarga de Actualizar los totales de las cuentas en la base de datos
+            cardService.ActualizarTotal(idCuenta, total);
+            //Actualizar total en las cuentas en la interfaz
+            cuentaManager.ActualizarTotal(idCuenta, total);
+
+            service.HacerReporte(idCuenta, idProducto, valorIngresado, txtAreaJustificacion.getText());
+
+            //Se retiran los panes, para que se puedan actualizar al volverlos a llamar
+            VBox panelRetirarProducto = uiContext.getPanelRetirarProducto();
+            AnimacionesUI.slideOutToRight(panelRetirarProducto, 100, 200);
+            panelRetirarProducto.setManaged(false);
+
+            VBox panePA = uiContext.getPanelPA();
+            AnimacionesUI.slideOutToRight(panePA, 100, 200);
+        }
     }
 }

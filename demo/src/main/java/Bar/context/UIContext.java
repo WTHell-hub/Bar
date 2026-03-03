@@ -1,10 +1,8 @@
 package Bar.context;
 
 import Bar.view.InterfazPrincipal.PanelProductos.ProductoManager;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -24,12 +22,21 @@ public class UIContext {
     private Button btnCancelar;
     private VBox panelPA;
     private Label lblNombreCuenta;
+    private VBox panelRetirarProducto;
+    private TextField txfCantidad;
+    private RadioButton rbHecho;
+    private RadioButton rbNoHecho;
+    private TextArea txtAreaJustificacion;
+    private Button btnAceptarEliminacion;
+    private Button btnCancelarEliminacion;
 
 
     public UIContext(FlowPane paneCuentas, TilePane paneProductos, TilePane tilePanePA,
                      TextField buscar, ComboBox<String> filtro, Button btnCerrar,
                      Button btnAggProducto, VBox panelProducto, VBox paneObjTemp,
-                     TilePane tilePaneObjTemp, Button btnAceptar, Button btnCancelar, VBox panelPA, Label lblNombreCuenta) {
+                     TilePane tilePaneObjTemp, Button btnAceptar, Button btnCancelar, VBox panelPA, Label lblNombreCuenta,
+                     VBox panelRetirarProducto, TextField txfCantidad, RadioButton rbHecho, RadioButton rbNoHecho, TextArea txtAreaJustificacion,
+                     Button btnAceptarEliminacion, Button btnCancelarEliminacion) {
         this.paneCuentas = paneCuentas;
         this.paneProductos = paneProductos;
         this.tilePanePA = tilePanePA;
@@ -44,6 +51,13 @@ public class UIContext {
         this.btnCancelar = btnCancelar;
         this.panelPA = panelPA;
         this.lblNombreCuenta = lblNombreCuenta;
+        this.panelRetirarProducto = panelRetirarProducto;
+        this.txfCantidad = txfCantidad;
+        this.rbHecho = rbHecho;
+        this.rbNoHecho = rbNoHecho;
+        this.txtAreaJustificacion = txtAreaJustificacion;
+        this.btnAceptarEliminacion = btnAceptarEliminacion;
+        this.btnCancelarEliminacion = btnCancelarEliminacion;
     }
 
     public FlowPane getPaneCuentas() { return paneCuentas; }
@@ -60,4 +74,11 @@ public class UIContext {
     public Button getBtnCancelar() { return btnCancelar; }
     public VBox getPanelPA() { return panelPA; }
     public Label getLblNombreCuenta() { return lblNombreCuenta; }
+    public VBox getPanelRetirarProducto() { return panelRetirarProducto; }
+    public TextField getTxfCantidad() { return txfCantidad; }
+    public RadioButton getRbHecho() { return rbHecho; }
+    public RadioButton getRbNoHecho() { return rbNoHecho; }
+    public TextArea getTxtAreaJustificacion() { return txtAreaJustificacion; }
+    public Button getBtnAceptarEliminacion() { return btnAceptarEliminacion; }
+    public Button getBtnCancelarEliminacion() { return btnCancelarEliminacion; }
 }

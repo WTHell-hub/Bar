@@ -3,12 +3,14 @@ package Bar.service;
 import Bar.db.GestorDB;
 import Bar.model.Producto;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ProductoService {
 
@@ -27,11 +29,39 @@ public class ProductoService {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String nombre = rs.getString("nombre");
-                double cantidad = rs.getDouble("cantidad");
+                BigDecimal cantidadDb = rs.getBigDecimal("cantidad");
+                double cantidad  = 0.0;
+                if (cantidadDb != null) {
+                    cantidad = cantidadDb.doubleValue();
+                }
                 double precio = Double.parseDouble(rs.getBigDecimal("precio").toString());
                 String categoria = rs.getString("categoria");
 
-                productos.add(new Producto(id, nombre, cantidad, precio, categoria));
+                if (cantidadDb != null) {
+                    productos.add(new Producto(id, nombre, cantidad, precio, categoria));
+                } else {
+
+                    PreparedStatement stmtComprobar = conn.prepareStatement(
+                            "select min(i.stock / p.cantidad) as disponible\n" +
+                                    "from productoinsumo p\n" +
+                                    "join insumo i on i.id = p.id_Insumo\n" +
+                                    "where p.id_Producto = ?"
+                    );
+
+                    stmtComprobar.setInt(1, id);
+                    ResultSet rsComprobar = stmtComprobar.executeQuery();
+
+                    if (rsComprobar.next()) {
+                        Double disponible = rsComprobar.getObject(1, Double.class);
+                        if (disponible == null) {
+                            disponible = 0.0;
+                        }
+                        cantidad = disponible;
+                    }
+
+
+                    productos.add(new Producto(id, nombre, cantidad, precio, categoria));
+                }
             }
 
         } catch (SQLException e) {
@@ -78,14 +108,65 @@ public class ProductoService {
     public void RestarProductos(Connection conn, List<Producto> lista) {
         try {
             for (Producto p: lista) {
-                PreparedStatement stmt = conn.prepareStatement(
-                        "UPDATE producto SET cantidad = cantidad - ? WHERE id = ?"
+
+                PreparedStatement stmtCantidad = conn.prepareStatement(
+                        "SELECT * FROM productoinsumo WHERE id_Producto = ? LIMIT 1"
                 );
 
-                stmt.setDouble(1, p.getCantidad());
-                stmt.setInt(2, p.getId());
+                stmtCantidad.setInt(1, p.getId());
 
-                stmt.executeUpdate();
+                ResultSet rs = stmtCantidad.executeQuery();
+
+                if (!rs.next()) {
+                    PreparedStatement stmtNoNull = conn.prepareStatement(
+                            "UPDATE producto SET cantidad = cantidad - ? WHERE id = ?"
+                    );
+
+                    stmtNoNull.setDouble(1, p.getCantidad());
+                    stmtNoNull.setInt(2, p.getId());
+
+                    stmtNoNull.executeUpdate();
+                } else {
+
+                    PreparedStatement stmtComprobar = conn.prepareStatement(
+                            "select min(i.stock / p.cantidad) as disponible\n" +
+                                    "from productoinsumo p\n" +
+                                    "join insumo i on i.id = p.id_Insumo\n" +
+                                    "where p.id_Producto = ?"
+                    );
+
+                    stmtComprobar.setInt(1, p.getId());
+                    ResultSet rsDisponible = stmtComprobar.executeQuery();
+                    if (rsDisponible.next()) {
+                        BigDecimal disponible = rsDisponible.getBigDecimal("disponible");
+
+                        if (disponible.doubleValue() >= p.getCantidad()) {
+
+                            PreparedStatement stmtBuscarCantidad = conn.prepareStatement(
+                                    "SELECT id_Insumo, cantidad FROM productoinsumo WHERE id_Producto = ?"
+                            );
+
+                            stmtBuscarCantidad.setInt(1, p.getId());
+
+                            ResultSet rsBuscarCantidad = stmtBuscarCantidad.executeQuery();
+
+                            while(rsBuscarCantidad.next()) {
+                                int idInsumo = rsBuscarCantidad.getInt("id_Insumo");
+                                double stock =  rsBuscarCantidad.getDouble("cantidad");
+
+                                PreparedStatement stmtActualizar = conn.prepareStatement(
+                                        "UPDATE insumo SET stock = stock - ? WHERE  id = ?"
+                                );
+
+                                stmtActualizar.setDouble(1, (stock * p.getCantidad()));
+                                stmtActualizar.setInt(2, idInsumo);
+
+                                stmtActualizar.executeUpdate();
+                            }
+                        }
+                    }
+
+                }
             }
 
             conn.commit();

@@ -48,6 +48,7 @@ public class ProductoController {
         if (Double.parseDouble(lblCantidad.getText()) > 0) {
 
             if (!panel.isVisible()) {
+                panel.setManaged(true);
                 AnimacionesUI.slideInFromRight(panel, 50, 150);
             }
 
@@ -61,6 +62,12 @@ public class ProductoController {
             alert.setHeaderText("Error");
             alert.setContentText("No queda: "+lblNombre.getText());
             alert.showAndWait();
+        }
+
+        VBox panelRetirarProducto = uiContext.getPanelRetirarProducto();
+        if (panelRetirarProducto.isVisible()) {
+            AnimacionesUI.slideOutToRight(panelRetirarProducto, 100, 200);
+            panelRetirarProducto.setManaged(false);
         }
     }
 
@@ -78,6 +85,9 @@ public class ProductoController {
 
         Label lblCantidad = (Label) pane.lookup("#lblCantidad");
         lblCantidad.textProperty().bind(vmTemp.cantidadProperty().asString());
+
+        Label lblCategoria = (Label) pane.lookup("#lblCategoria");
+        lblCategoria.textProperty().bind(vmTemp.categoriaProperty());
 
         Label lblPrecio = (Label) pane.lookup("#lblPrecio");
         lblPrecio.textProperty().bind(vmTemp.totalProperty().asString());

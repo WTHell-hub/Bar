@@ -78,6 +78,7 @@ public class ProductoManager {
         }
 
         AnimacionesUI.slideOutToRight(uiContext.getPaneObjTemp(), 100, 200);
+        uiContext.getPaneObjTemp().setManaged(false);
         AnimacionesUI.slideOutToRight(uiContext.getPanelProducto(), 300, 200);
 
         Connection conn = service.VincularProductos(idCuenta, lista);
@@ -141,5 +142,9 @@ public class ProductoManager {
                 }
             }
         }
+    }
+
+    public CuentaManager getCuentaManager() {
+        return cuentaManager;
     }
 }
