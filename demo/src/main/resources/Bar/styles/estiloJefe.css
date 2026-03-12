@@ -1,0 +1,425 @@
+/* ESTILOS GENERALES */
+.root {
+    -fx-font-family: 'Segoe UI', 'System', sans-serif;
+    -fx-background-color: #f5f7fa;
+}
+
+/* ========== BARRA SUPERIOR ========== */
+.top-bar {
+    -fx-background-color: linear-gradient(to right, #1e3c72, #2a5298);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 2);
+    -fx-padding: 15 20;
+}
+
+.top-bar-label {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.3), 3, 0, 1, 1);
+}
+
+/* DatePickers personalizados */
+.date-picker {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
+}
+
+.date-picker .text-field {
+    -fx-background-radius: 5 0 0 5;
+    -fx-border: none;
+    -fx-padding: 8 12;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: linear-gradient(to bottom, #fff, #f0f0f0);
+    -fx-background-radius: 0 5 5 0;
+}
+
+/* Botón actualizar */
+.btn-actualizar {
+    -fx-background-color: linear-gradient(to bottom, #27ae60, #229954);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 1);
+}
+
+.btn-actualizar:hover {
+    -fx-background-color: linear-gradient(to bottom, #2ecc71, #27ae60);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 8, 0, 0, 2);
+}
+
+.btn-actualizar:pressed {
+    -fx-background-color: linear-gradient(to bottom, #229954, #1e8449);
+    -fx-translate-y: 1;
+}
+
+/* Separador entre fechas */
+.separator-fechas {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 5;
+}
+
+/* ========== TÍTULOS DE SECCIÓN ========== */
+.titulo-seccion {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 20 0 10 0;
+}
+
+.titulo-seccion-alerta {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #c0392b;
+    -fx-padding: 0 0 10 0;
+}
+
+.subtitulo {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+    -fx-padding: 15 0 5 0;
+}
+
+/* ========== CARDS DE KPI ========== */
+.kpi-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 12, 0, 0, 4);
+    -fx-padding: 20;
+    -fx-alignment: center;
+    -fx-min-width: 180;
+    -fx-min-height: 130;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-transition: all 0.3s ease;
+}
+
+.kpi-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 18, 0, 0, 8);
+    -fx-translate-y: -2;
+    -fx-cursor: hand;
+}
+
+/* Variantes de colores para cada card - CORREGIDO con mayor especificidad */
+.kpi-card.kpi-card-1 {
+    -fx-background-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.kpi-card.kpi-card-1 .kpi-subtitle,
+.kpi-card.kpi-card-1 .kpi-value {
+    -fx-text-fill: white;
+}
+
+.kpi-card.kpi-card-2 {
+    -fx-background-color: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.kpi-card.kpi-card-2 .kpi-subtitle,
+.kpi-card.kpi-card-2 .kpi-value {
+    -fx-text-fill: white;
+}
+
+.kpi-card.kpi-card-3 {
+    -fx-background-color: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.kpi-card.kpi-card-3 .kpi-subtitle,
+.kpi-card.kpi-card-3 .kpi-value {
+    -fx-text-fill: white;
+}
+
+.kpi-card.kpi-card-4 {
+    -fx-background-color: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.kpi-card.kpi-card-4 .kpi-subtitle,
+.kpi-card.kpi-card-4 .kpi-value {
+    -fx-text-fill: white;
+}
+
+/* Estilos base para textos de KPI (cuando no están en cards de color) */
+.kpi-subtitle {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #7f8c8d;
+    -fx-padding: 0 0 10 0;
+}
+
+.kpi-value {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+/* ========== TABLAS ========== */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 8, 0, 0, 2);
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+    -fx-background-radius: 10 10 0 0;
+    -fx-padding: 5 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #495057;
+    -fx-alignment: center-left;
+    -fx-padding: 10 5;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #f1f3f5;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #e3f2fd;
+}
+
+.table-view .table-cell {
+    -fx-padding: 8 5;
+    -fx-font-size: 13px;
+    -fx-alignment: center-left;
+}
+
+/* ========== LISTVIEW DE ALERTAS ========== */
+.list-view {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 8, 0, 0, 2);
+}
+
+.list-view .list-cell {
+    -fx-padding: 12;
+    -fx-background-color: white;
+    -fx-border-color: #f0f0f0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #fff3e0;
+}
+
+/* Items de alerta personalizados */
+.alerta-item {
+    -fx-background-color: #fee;
+    -fx-background-radius: 8;
+    -fx-border-color: #faa;
+    -fx-border-radius: 8;
+    -fx-padding: 12;
+}
+
+.alerta-item .nombre {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #c0392b;
+}
+
+.alerta-item .detalle {
+    -fx-font-size: 12px;
+    -fx-text-fill: #e74c3c;
+}
+
+/* ========== ESTADOS DE STOCK ========== */
+.stock-critical {
+    -fx-text-fill: #c0392b;
+    -fx-font-weight: bold;
+    -fx-background-color: #fce4e4;
+    -fx-background-radius: 4;
+    -fx-padding: 2 6;
+}
+
+.stock-bajo {
+    -fx-text-fill: #e67e22;
+    -fx-font-weight: bold;
+    -fx-background-color: #fff3e0;
+    -fx-background-radius: 4;
+    -fx-padding: 2 6;
+}
+
+.stock-normal {
+    -fx-text-fill: #27ae60;
+    -fx-font-weight: bold;
+    -fx-background-color: #e8f5e9;
+    -fx-background-radius: 4;
+    -fx-padding: 2 6;
+}
+
+/* ========== BARRA INFERIOR ========== */
+.bottom-bar {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 10 20;
+}
+
+.lbl-actualizacion {
+    -fx-text-fill: #95a5a6;
+    -fx-font-size: 12px;
+    -fx-font-style: italic;
+}
+
+/* ========== SCROLLPANES ========== */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ========== SEPARADORES ========== */
+.separator {
+    -fx-padding: 10 0;
+}
+
+.separator .line {
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1;
+}
+
+/* ========== ANIMACIONES ========== */
+@keyframes fadeIn {
+    from { -fx-opacity: 0; }
+    to { -fx-opacity: 1; }
+}
+
+.fade-in {
+    -fx-animation: fadeIn 0.5s ease-in;
+}
+
+/* ========== SCROLLBARS PERSONALIZADAS ========== */
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 12;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 6;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #95a5a6;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: #ecf0f1;
+    -fx-background-radius: 6;
+}
+
+/* ========== TOOLTIP ========== */
+.tooltip {
+    -fx-background-color: #2c3e50;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-padding: 8 12;
+    -fx-background-radius: 6;
+}
+
+/* ========== MENÚ LATERAL ========== */
+.menu-lateral {
+    -fx-background-color: linear-gradient(to bottom, #2c3e50, #1e2b37);
+    -fx-pref-width: 250;
+    -fx-padding: 20 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 0);
+}
+
+.menu-titulo {
+    -fx-text-fill: #ecf0f1;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 20 20;
+    -fx-border-color: #34495e;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-insets: 0 0 15 0;
+}
+
+.menu-boton {
+    -fx-background-color: transparent;
+    -fx-text-fill: #bdc3c7;
+    -fx-font-size: 14px;
+    -fx-padding: 12 20;
+    -fx-alignment: CENTER_LEFT;
+    -fx-cursor: hand;
+    -fx-graphic-text-gap: 12;
+}
+
+.menu-boton:hover {
+    -fx-background-color: #34495e;
+    -fx-text-fill: white;
+}
+
+.menu-boton:pressed {
+    -fx-background-color: #2980b9;
+    -fx-text-fill: white;
+}
+
+.menu-boton:selected {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 0);
+}
+
+.menu-separator {
+    -fx-background-color: #34495e;
+    -fx-pref-height: 1;
+    -fx-margin: 15 20;
+}
+
+/* Contenido principal */
+.contenido-principal {
+    -fx-background-color: #f5f7fa;
+    -fx-padding: 20;
+}
+
+/* Tarjetas de acceso rápido en el dashboard */
+.dashboard-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 8, 0, 0, 2);
+    -fx-padding: 15;
+    -fx-alignment: center;
+    -fx-min-width: 150;
+    -fx-min-height: 120;
+    -fx-cursor: hand;
+}
+
+.dashboard-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 12, 0, 0, 4);
+    -fx-translate-y: -2;
+}
+
+.dashboard-card .icono {
+    -fx-font-size: 32px;
+}
+
+.dashboard-card .titulo {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 10 0 0 0;
+}

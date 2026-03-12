@@ -1,57 +1,79 @@
 package Bar.model;
 
+import javafx.beans.property.*;
+
 public class Producto {
-    private int id;
-    private String nombre;
-    private double cantidad;
-    private Double precio;
-    private String categoria;
+    private IntegerProperty id;
+    private StringProperty nombre;
+    private DoubleProperty cantidad;
+    private DoubleProperty precio;
+    private StringProperty categoria;
 
     public Producto(int id, String nombre, double cantidad, Double precio, String categoria) {
-        this.id = id;
-        this.nombre = nombre;
-        this.cantidad = cantidad;
-        this.precio = precio;
-        this.categoria = categoria;
+        this.id = new SimpleIntegerProperty(id);
+        this.nombre = new SimpleStringProperty(nombre);
+        this.cantidad = new SimpleDoubleProperty(cantidad);
+        this.precio = new SimpleDoubleProperty(precio);
+        this.categoria = new SimpleStringProperty(categoria);
     }
 
     public int getId() {
+        return id.get();
+    }
+
+    public IntegerProperty idProperty() {
         return id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id.set(id);
     }
 
     public String getNombre() {
+        return nombre.get();
+    }
+
+    public StringProperty nombreProperty() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre.set(nombre);
     }
 
     public double getCantidad() {
+        return cantidad.get();
+    }
+
+    public DoubleProperty cantidadProperty() {
         return cantidad;
     }
 
     public void setCantidad(double cantidad) {
-        this.cantidad = cantidad;
+        this.cantidad.set(cantidad);
     }
 
-    public Double getPrecio() {
+    public double getPrecio() {
+        return precio.get();
+    }
+
+    public DoubleProperty precioProperty() {
         return precio;
     }
 
-    public void setPrecio(Double precio) {
-        this.precio = precio;
+    public void setPrecio(double precio) {
+        this.precio.set(precio);
     }
 
     public String getCategoria() {
+        return categoria.get();
+    }
+
+    public StringProperty categoriaProperty() {
         return categoria;
     }
 
     public void setCategoria(String categoria) {
-        this.categoria = categoria;
+        this.categoria.set(categoria);
     }
 }

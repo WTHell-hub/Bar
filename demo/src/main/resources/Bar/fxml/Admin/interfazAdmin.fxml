@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1900.0" styleClass="root" stylesheets="@../../styles/estiloJefe.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Bar.view.InterfazAdmin.InterfazAdmin">
+   <children>
+      <VBox fx:id="panelLateralReducido" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#onMouseEntered" prefHeight="1200.0" prefWidth="10.0" styleClass="menu-color" stylesheets="@../../styles/MenuLateral.css" />
+      <VBox fx:id="panelLateral" managed="false" nodeOrientation="LEFT_TO_RIGHT" onMouseExited="#onMouseExited" prefHeight="1010.0" prefWidth="150.0" styleClass="menu-lateral" stylesheets="@../../styles/MenuLateral.css" visible="false">
+         <children>
+            <Label styleClass="menu-titulo" text="Bar Control" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Region prefHeight="10.0" prefWidth="200.0" />
+            <Button fx:id="btnGeneral" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#onGeneralInterfaz" prefHeight="42.0" prefWidth="279.0" styleClass="menu-boton" text="General">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnProductos" mnemonicParsing="false" onMouseClicked="#onProductosInterfaz" prefHeight="42.0" prefWidth="346.0" styleClass="menu-boton" text="Productos">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnInsumos" mnemonicParsing="false" onMouseClicked="#onInsumosInterfaz" prefHeight="42.0" prefWidth="382.0" styleClass="menu-boton" text="Insumos">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRecetas" mnemonicParsing="false" prefHeight="42.0" prefWidth="407.0" styleClass="menu-boton" text="Recetas">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Region prefHeight="661.0" prefWidth="250.0" VBox.vgrow="ALWAYS" />
+            <Separator prefWidth="200.0" />
+            <Button fx:id="btnAjustes" mnemonicParsing="false" prefHeight="42.0" prefWidth="358.0" styleClass="menu-boton" text="Ajustes">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnSalir" mnemonicParsing="false" onMouseClicked="#onSalir" prefHeight="42.0" prefWidth="411.0" styleClass="menu-boton" text="Salir">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <StackPane prefHeight="150.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+         <children>
+            <BorderPane fx:id="ventanaInformacion" prefHeight="524.0" prefWidth="854.0" />
+         </children>
+      </StackPane>
+   </children>
+</HBox>

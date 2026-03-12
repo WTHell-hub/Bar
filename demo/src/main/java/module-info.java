@@ -11,6 +11,7 @@ module src.fromcontroller.demo {
     requires transitive javafx.graphics;
     requires transitive javafx.base;
 
+
     exports Bar.db;
     exports Bar.app;
     opens Bar.app to javafx.fxml;
@@ -19,13 +20,17 @@ module src.fromcontroller.demo {
     exports Bar.service;
     exports Bar.context;
     exports Bar.view.InterfazPrincipal;
+    exports Bar.view.Login;
+    opens Bar.view.Login;
     opens Bar.view.InterfazPrincipal to javafx.fxml;
-    exports Bar.view.InterfazAlmacen;
-    opens Bar.view.InterfazAlmacen to javafx.fxml;
+    exports Bar.view.InterfazAdmin;
+    opens Bar.view.InterfazAdmin to javafx.fxml;
     exports Bar.view.InterfazPrincipal.PanelProductos;
     opens Bar.view.InterfazPrincipal.PanelProductos to javafx.fxml;
     exports Bar.view.InterfazPrincipal.StagePrincipal;
     opens Bar.view.InterfazPrincipal.StagePrincipal to javafx.fxml;
     exports Bar.view.InterfazPrincipal.Cuentas;
     opens Bar.view.InterfazPrincipal.Cuentas to javafx.fxml;
+    exports Bar.service.Admin;
+    exports Bar.service.Trabajador;
 }

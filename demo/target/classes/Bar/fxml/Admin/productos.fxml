@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="894.0" stylesheets="@../../styles/EstiloGeneral.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Bar.view.InterfazAdmin.ControllerDatosProductoAlmacen">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <items>
+                  <Button fx:id="btnNuevoProducto" mnemonicParsing="false" onMouseClicked="#onNuevoProducto" styleClass="lblNombre" text="Nuevo Producto" />
+                  <Button fx:id="btnEditar" mnemonicParsing="false" text="Editar" />
+                  <Button fx:id="btnEliminar" mnemonicParsing="false" onMouseClicked="#onEliminar" styleClass="button-danger" text="Eliminar" />
+                  <TextField fx:id="textBuscar" styleClass="date-picker" />
+               </items>
+            </ToolBar>
+         </top>
+         <right>
+            <VBox fx:id="panelLateralAggProducto" alignment="CENTER" managed="false" prefHeight="538.0" prefWidth="298.0" spacing="20.0" styleClass="menu-bar" visible="false" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="438.0" spacing="20.0" styleClass="kpi-card-4" stylesheets="@../../styles/Cards.css">
+                     <children>
+                        <Label styleClass="label-subheader" stylesheets="@../../styles/Cards.css" text="Nombre:">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtNombre" prefWidth="169.0" promptText="Ingrese el nombre" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="438.0" spacing="20.0" styleClass="kpi-card-4" stylesheets="@../../styles/Cards.css">
+                     <children>
+                        <Label styleClass="label-subheader" stylesheets="@../../styles/Cards.css" text="Stock:">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtStock" prefHeight="36.0" prefWidth="163.0" promptText="Ingrese la cantidad" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="438.0" spacing="20.0" styleClass="kpi-card-4" stylesheets="@../../styles/Cards.css">
+                     <children>
+                        <Label styleClass="label-subheader" stylesheets="@../../styles/Cards.css" text="Precio:">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtPrecio" prefHeight="36.0" prefWidth="182.0" promptText="Ingrese el precio" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="438.0" spacing="20.0" styleClass="kpi-card-4" stylesheets="@../../styles/Cards.css">
+                     <children>
+                        <Label styleClass="label-subheader" stylesheets="@../../styles/Cards.css" text="Categoría:">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtCategoria" prefHeight="36.0" prefWidth="158.0" promptText="Ingrese la categoría" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+                     <children>
+                        <Button fx:id="btnAceptar" mnemonicParsing="false" onMouseClicked="#onAceptarProducto" styleClass="button-success" text="Aceptar">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnCancelar" mnemonicParsing="false" onMouseClicked="#onCancelarProducto" styleClass="button-danger" text="Cancelar">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </VBox>
+         </right>
+         <center>
+            <TableView fx:id="tableAlmacen" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <columns>
+                  <TableColumn fx:id="colID" minWidth="50.0" prefWidth="50.0" text="ID" />
+                  <TableColumn fx:id="colNombre" minWidth="250.0" prefWidth="200.0" text="Nombre" />
+                  <TableColumn fx:id="colCantidad" prefWidth="150.0" text="Cantidad" />
+                  <TableColumn fx:id="colPrecio" minWidth="150.0" prefWidth="150.0" text="Precio" />
+                  <TableColumn fx:id="colCategoria" minWidth="150.0" prefWidth="150.0" text="Categoría" />
+               </columns>
+            </TableView>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

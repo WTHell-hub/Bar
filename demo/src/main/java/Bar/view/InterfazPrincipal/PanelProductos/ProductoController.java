@@ -1,10 +1,11 @@
 package Bar.view.InterfazPrincipal.PanelProductos;
 
 import Bar.Animaciones.AnimacionesUI;
-import Bar.context.UIContext;
+import Bar.context.UIContextDep;
 import Bar.model.Producto;
 import Bar.viewModel.ProdTempViewModel;
 import Bar.viewModel.ProductoViewModel;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -26,34 +27,33 @@ public class ProductoController {
     @FXML private Label lblCategoria;
 
     private TilePane tilePaneObjTemp;
-    private UIContext uiContext;
+    private UIContextDep uiContextDep;
     private ProductoViewModel vm;
-    private double EstadoAnterior;
 
-    public void setData(ProductoViewModel vm, UIContext uiContext) {
+    public void setData(ProductoViewModel vm, UIContextDep uiContextDep) {
         lblNombre.textProperty().bind(vm.nombreProperty());
         lblCantidad.textProperty().bind(vm.cantidadProperty().asString());
         lblPrecio.textProperty().bind(vm.precioProperty().asString());
         lblCategoria.textProperty().bind(vm.categoriaProperty());
 
-        this.uiContext = uiContext;
-        tilePaneObjTemp = uiContext.getTilePaneObjTemp();
+        this.uiContextDep = uiContextDep;
+        tilePaneObjTemp = uiContextDep.getTilePaneObjTemp();
         this.vm = vm;
     }
 
     @FXML
     private void onMouseClicked(MouseEvent event) throws IOException {
-        VBox panel = uiContext.getPaneObjTemp();
+        VBox panel = uiContextDep.getPaneObjTemp();
 
-        if (Double.parseDouble(lblCantidad.getText()) > 0) {
+        if (Double.parseDouble(lblCantidad.getText()) >= 1) {
 
             if (!panel.isVisible()) {
                 panel.setManaged(true);
                 AnimacionesUI.slideInFromRight(panel, 50, 150);
             }
 
-            EstadoAnterior = Double.parseDouble(lblCantidad.getText());
-            vm.cantidadProperty().set(EstadoAnterior - 1.0);
+            double estadoAnterior = Double.parseDouble(lblCantidad.getText());
+            vm.cantidadProperty().set(estadoAnterior - 1.0);
 
             MostrarProducto();
         } else {
@@ -64,7 +64,7 @@ public class ProductoController {
             alert.showAndWait();
         }
 
-        VBox panelRetirarProducto = uiContext.getPanelRetirarProducto();
+        VBox panelRetirarProducto = uiContextDep.getPanelRetirarProducto();
         if (panelRetirarProducto.isVisible()) {
             AnimacionesUI.slideOutToRight(panelRetirarProducto, 100, 200);
             panelRetirarProducto.setManaged(false);
@@ -72,7 +72,7 @@ public class ProductoController {
     }
 
     public void MostrarProducto() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Bar/fxml/cardPA.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Bar/fxml/Dependiente/cardPA.fxml"));
         Pane pane = loader.load();
 
         ProdTempViewModel vmTemp = new ProdTempViewModel(new Producto(vm.getId(), vm.getNombre(), 1, vm.getPrecio(), vm.getCategoria()));
@@ -94,11 +94,13 @@ public class ProductoController {
 
         pane.setOnContextMenuRequested(event -> {
             ContextMenu menu = new ContextMenu();
-            MenuItem eliminar = new MenuItem("Eliminar");
+            MenuItem eliminar = new MenuItem("Eliminar 1");
+            MenuItem eliminarTodo = new MenuItem("Eliminar todo");
 
-            menu.getItems().add(eliminar);
+            menu.getItems().addAll(eliminar, eliminarTodo);
 
-            eliminar.setOnAction(_ -> {
+            eliminarTodo.setOnAction(_ -> {
+
                 Label nombre = (Label) pane.lookup("#lblNombre");
 
                 tilePaneObjTemp.getChildren().removeIf(e -> {
@@ -111,6 +113,25 @@ public class ProductoController {
 
                     return e.lookup("#lblNombre").equals(nombre);
                 });
+            });
+
+            eliminar.setOnAction(_ -> {
+
+                if (vmTemp.getCantidad() >= 1) {
+
+                    vmTemp.setCantidad(vmTemp.getCantidad() - 1);
+
+                    vm.setCantidad(vm.getCantidad() + 1);
+
+                    if (vmTemp.getCantidad() < 1) {
+                        tilePaneObjTemp.getChildren().removeIf(node -> {
+                            Label lblID = (Label) node.lookup("#ID");
+                            int id = Integer.parseInt(lblID.getText());
+
+                            return id == vm.getId();
+                        });
+                    }
+                }
             });
 
             menu.show(pane, event.getScreenX(), event.getScreenY());

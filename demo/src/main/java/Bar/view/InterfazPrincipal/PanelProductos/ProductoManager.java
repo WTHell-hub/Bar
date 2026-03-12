@@ -1,10 +1,10 @@
 package Bar.view.InterfazPrincipal.PanelProductos;
 
 import Bar.Animaciones.AnimacionesUI;
-import Bar.context.UIContext;
+import Bar.context.UIContextDep;
 import Bar.model.Producto;
-import Bar.service.CardService;
-import Bar.service.ProductoService;
+import Bar.service.Trabajador.CardService;
+import Bar.service.Trabajador.ProductoService;
 import Bar.view.InterfazPrincipal.Cuentas.CuentaManager;
 import Bar.viewModel.ProductoViewModel;
 import javafx.fxml.FXMLLoader;
@@ -19,17 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductoManager {
-    private final ProductoService service = new ProductoService();
+    private final ProductoService productoService = new ProductoService();
     private final TilePane paneProductos;
-    private final UIContext uiContext;
+    private final UIContextDep uiContextDep;
     private List<Producto> productos;
     private int idCuenta;
     private CuentaManager cuentaManager;
 
-    public ProductoManager(UIContext uiContext) {
-        this.paneProductos = uiContext.getPaneProductos();
-        this.uiContext = uiContext;
-        productos = service.CargarProductosDB();
+    public ProductoManager(UIContextDep uiContextDep) {
+        this.paneProductos = uiContextDep.getPaneProductos();
+        this.uiContextDep = uiContextDep;
+        productos = productoService.CargarProductosDB();
     }
 
     public void CargarProductos(int id) throws IOException {
@@ -37,7 +37,7 @@ public class ProductoManager {
         idCuenta = id;
 
         productos.clear();
-        productos = service.CargarProductosDB();
+        productos = productoService.CargarProductosDB();
 
         for (Producto p: productos) {
             ProductoViewModel vm = new ProductoViewModel(p);
@@ -46,12 +46,12 @@ public class ProductoManager {
     }
 
     public void MostrarProducto(ProductoViewModel vm) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Bar/fxml/cardProducto.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Bar/fxml/Dependiente/cardProducto.fxml"));
         Pane pane = loader.load();
 
         ProductoController controller = loader.getController();
 
-        controller.setData(vm, uiContext);
+        controller.setData(vm, uiContextDep);
 
         paneProductos.getChildren().add(pane);
 
@@ -63,7 +63,7 @@ public class ProductoManager {
     }
 
     public void VincularProductos() {
-        TilePane tilePaneObjTemp = uiContext.getTilePaneObjTemp();
+        TilePane tilePaneObjTemp = uiContextDep.getTilePaneObjTemp();
 
         List<Producto> lista = new ArrayList<>();
 
@@ -77,18 +77,18 @@ public class ProductoManager {
             lista.add(new Producto(Integer.parseInt(id.getText()), nombre.getText(), Double.parseDouble(cantidad.getText()), Double.parseDouble(precio.getText()), categoria.getText()));
         }
 
-        AnimacionesUI.slideOutToRight(uiContext.getPaneObjTemp(), 100, 200);
-        uiContext.getPaneObjTemp().setManaged(false);
-        AnimacionesUI.slideOutToRight(uiContext.getPanelProducto(), 300, 200);
+        Connection conn = productoService.VincularProductos(idCuenta, lista);
+        productoService.RestarProductos(conn, lista);
 
-        Connection conn = service.VincularProductos(idCuenta, lista);
-        service.RestarProductos(conn, lista);
+        AnimacionesUI.slideOutToRight(uiContextDep.getPaneObjTemp(), 100, 200);
+        uiContextDep.getPaneObjTemp().setManaged(false);
+        AnimacionesUI.slideOutToRight(uiContextDep.getPanelProducto(), 300, 200);
 
-        AnimacionesUI.slideOutToRight(uiContext.getPanelPA(), 100, -300);
+        AnimacionesUI.slideOutToRight(uiContextDep.getPanelPA(), 100, -300);
     }
 
     public void ActualizarCuentas() {
-        double total = service.CalcularTotal(idCuenta);
+        double total = productoService.CalcularTotal(idCuenta);
 
         //Actualizamos la cuenta total en la base de datos, usando el service perteneciente
         CardService cardService = new CardService();

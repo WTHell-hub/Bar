@@ -1,9 +1,9 @@
 package Bar.view.InterfazPrincipal.Cuentas;
 
 import Bar.Animaciones.AnimacionesUI;
-import Bar.context.UIContext;
+import Bar.context.UIContextDep;
 import Bar.model.Card;
-import Bar.service.CardService;
+import Bar.service.Trabajador.CardService;
 import Bar.view.InterfazPrincipal.PanelProductos.ProductoManager;
 import Bar.viewModel.CuentaViewModel;
 import javafx.fxml.FXMLLoader;
@@ -20,13 +20,13 @@ import java.util.Map;
 public class CuentaManager {
     private final CardService service = new CardService();
     private final FlowPane paneCuentas;
-    private final UIContext uiContext;
+    private final UIContextDep uiContextDep;
     private final ProductoManager productoManager;
     private Map<Integer, CuentaController> controllers = new HashMap<>();
 
-    public CuentaManager(UIContext uiContext, ProductoManager productoManager) {
-        this.paneCuentas = uiContext.getPaneCuentas();
-        this.uiContext = uiContext;
+    public CuentaManager(UIContextDep uiContextDep, ProductoManager productoManager) {
+        this.paneCuentas = uiContextDep.getPaneCuentas();
+        this.uiContextDep = uiContextDep;
         this.productoManager = productoManager;
     }
 
@@ -45,13 +45,13 @@ public class CuentaManager {
 
     public void MostrarCard(CuentaViewModel vm) throws IOException {
         //Obtención de recursos
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Bar/fxml/cardCuenta.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Bar/fxml/Dependiente/cardCuenta.fxml"));
         Pane card = loader.load();
 
         //Asignación de valores
         CuentaController controller = loader.getController();
 
-        controller.setData(vm, uiContext, productoManager);
+        controller.setData(vm, uiContextDep, productoManager);
         controllers.put(vm.idProperty().get(), controller);
 
         //Agregar el menú desplegable de cada card
@@ -69,6 +69,10 @@ public class CuentaManager {
                 service.CerrarCuentaDB(vm.idProperty().getValue());
 
                 paneCuentas.getChildren().remove(card);
+
+                //Cerrar paneles para que no hallan errores como q se agg productos a cuentas fantasmas o ya cerradas
+                AnimacionesUI.slideOutToRight(uiContextDep.getPanelPA(), 100, 200);
+                AnimacionesUI.slideOutToRight(uiContextDep.getPanelProducto(), 100, 200);
             });
 
             menu.show(card, e.getScreenX(), e.getScreenY());

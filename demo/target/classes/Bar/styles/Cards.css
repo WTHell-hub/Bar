@@ -1,27 +1,337 @@
-/* Estilo base para las cards */
+/* ========== ESTILOS GENERALES ========== */
+.root {
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-background-color: #f5f7fa;
+}
+
+/* ========== CARDS BASE (la que usas en casi todo) ========== */
 .card {
     -fx-background-color: white;
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
-    -fx-border-color: #333;
-    -fx-border-width: 2;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0.5, 0, 0);
-    -fx-padding: 7; /* espacio interno */
-    -fx-alignment: center;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-padding: 10;
+    -fx-border-width: 0;
+    -fx-transition: all 0.3s ease;
 }
 
-/* Hover para cards */
 .card:hover {
-    -fx-background-color: #f9f9f9;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 15, 0, 0, 5);
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 12, 0.6, 0, 2);
-    -fx-scale-x: 1.02;
-    -fx-scale-y: 1.02;
 }
 
-/* Pressed para cards */
-.card:pressed {
-    -fx-background-color: #e0e0e0;
+/* ========== TOOLBAR / BORDES REDONDEADOS (fondo blanco con sombra) ========== */
+.tool-bar {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 8, 0, 0, 1);
+    -fx-padding: 10;
+    -fx-border-width: 0;
+}
+
+/* ========== CARDS DE CUENTAS (FlowPane) ========== */
+.card-cuenta {
+    -fx-background-color: linear-gradient(to bottom right, #667eea, #764ba2);
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 12, 0, 0, 3);
+    -fx-padding: 15;
+    -fx-min-width: 180;
+    -fx-min-height: 120;
+    -fx-alignment: center;
+    -fx-cursor: hand;
+}
+
+.card-cuenta:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.25), 18, 0, 0, 5);
+    -fx-translate-y: -2;
+}
+
+.card-cuenta:pressed {
+    -fx-translate-y: 0;
     -fx-scale-x: 0.98;
     -fx-scale-y: 0.98;
+}
+
+.card-cuenta .label {
+    -fx-text-fill: white;
+}
+
+.card-cuenta .lblNombre {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.card-cuenta .lblFecha {
+    -fx-font-size: 14px;
+    -fx-opacity: 0.9;
+}
+
+.card-cuenta .lblConsumo {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* Card para nueva cuenta (botón +) */
+.btn-nueva-cuenta {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-color: #27ae60;
+    -fx-border-width: 2;
+    -fx-border-radius: 15;
+    -fx-border-style: dashed;
+    -fx-min-width: 180;
+    -fx-min-height: 120;
+}
+
+.btn-nueva-cuenta .label {
+    -fx-text-fill: #27ae60;
+}
+
+.btn-nueva-cuenta:hover {
+    -fx-background-color: #f0fff0;
+    -fx-effect: dropshadow(three-pass-box, rgba(39, 174, 96, 0.3), 12, 0, 0, 3);
+}
+
+/* ========== CARDS DE PRODUCTOS (TilePane) ========== */
+.card-producto {
+    -fx-background-color: linear-gradient(to bottom right, #f093fb, #f5576c);
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 2);
+    -fx-padding: 12;
+    -fx-min-width: 140;
+    -fx-min-height: 110;
+    -fx-alignment: center;
+    -fx-cursor: hand;
+}
+
+.card-producto:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.25), 15, 0, 0, 4);
+    -fx-translate-y: -2;
+}
+
+.card-producto:pressed {
+    -fx-translate-y: 0;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* Variantes de color para productos (por categoría) */
+.card-producto-categoria1 {
+    -fx-background-color: linear-gradient(to bottom right, #667eea, #764ba2);
+}
+
+.card-producto-categoria2 {
+    -fx-background-color: linear-gradient(to bottom right, #f093fb, #f5576c);
+}
+
+.card-producto-categoria3 {
+    -fx-background-color: linear-gradient(to bottom right, #4facfe, #00f2fe);
+}
+
+.card-producto-categoria4 {
+    -fx-background-color: linear-gradient(to bottom right, #43e97b, #38f9d7);
+}
+
+.card-producto-categoria5 {
+    -fx-background-color: linear-gradient(to bottom right, #fa709a, #fee140);
+}
+
+.card-producto .label {
+    -fx-text-fill: white;
+}
+
+.card-producto .lblNombre {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-wrap-text: true;
+}
+
+.card-producto .lblCategoria {
+    -fx-font-size: 12px;
+    -fx-opacity: 0.9;
+    -fx-wrap-text: true;
+}
+
+.card-producto .lblPrecio {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.card-producto .lblCantidad {
+    -fx-font-size: 14px;
+    -fx-background-color: rgba(255,255,255,0.3);
+    -fx-background-radius: 10;
+    -fx-padding: 2 8;
+}
+
+/* ========== CARDS DEL CARRITO (Productos asociados / Objetos temporales) ========== */
+.card-carrito {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 1);
+    -fx-padding: 10;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-cursor: hand;
+}
+
+.card-carrito:hover {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #3498db;
+}
+
+.card-carrito .lblNombre {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.card-carrito .lblCantidad {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7f8c8d;
+}
+
+.card-carrito .lblPrecio {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #27ae60;
+}
+
+/* ========== CAMPOS DE TEXTO Y BÚSQUEDA ========== */
+.text-field, .combo-box {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 10;
+    -fx-padding: 8 12;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused, .combo-box:focused {
+    -fx-border-color: #3498db;
+    -fx-effect: dropshadow(three-pass-box, rgba(52, 152, 219, 0.3), 8, 0, 0, 0);
+}
+
+/* ========== BOTONES PRINCIPALES ========== */
+.button {
+    -fx-background-radius: 10;
+    -fx-padding: 8 16;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+/* Botón Aceptar (verde) */
+#btnAceptar, .btn-aceptar {
+    -fx-background-color: linear-gradient(to bottom, #27ae60, #229954);
+    -fx-text-fill: white;
+}
+
+#btnAceptar:hover, .btn-aceptar:hover {
+    -fx-background-color: linear-gradient(to bottom, #2ecc71, #27ae60);
+    -fx-effect: dropshadow(three-pass-box, rgba(39, 174, 96, 0.4), 8, 0, 0, 2);
+}
+
+/* Botón Cancelar (rojo) */
+#btnCancelar, .btn-cancelar {
+    -fx-background-color: linear-gradient(to bottom, #e74c3c, #c0392b);
+    -fx-text-fill: white;
+}
+
+#btnCancelar:hover, .btn-cancelar:hover {
+    -fx-background-color: linear-gradient(to bottom, #e67e22, #d35400);
+    -fx-effect: dropshadow(three-pass-box, rgba(231, 76, 60, 0.4), 8, 0, 0, 2);
+}
+
+/* Botón Admin (azul) */
+#btnAdmin {
+    -fx-background-color: linear-gradient(to bottom, #3498db, #2980b9);
+    -fx-text-fill: white;
+}
+
+#btnAdmin:hover {
+    -fx-background-color: linear-gradient(to bottom, #5dade2, #3498db);
+}
+
+/* Botón Cerrar (gris) */
+#btnCerrar {
+    -fx-background-color: linear-gradient(to bottom, #95a5a6, #7f8c8d);
+    -fx-text-fill: white;
+}
+
+/* ========== RADIO BUTTONS ========== */
+.radio-button {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 14px;
+}
+
+.radio-button .radio {
+    -fx-background-color: white;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 10;
+}
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: #3498db;
+}
+
+/* ========== TEXT AREA ========== */
+.text-area {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 10;
+}
+
+.text-area .content {
+    -fx-background-radius: 10;
+    -fx-background-color: white;
+}
+
+/* ========== SCROLLPANES ========== */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 12;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 6;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #95a5a6;
+}
+
+/* ========== PANELES DE DETALLE ========== */
+#panelObjTemp, #panelRetirarProducto, #panelPA {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-padding: 15;
+    -fx-spacing: 10;
+}
+
+/* ========== TÍTULOS DE SECCIÓN ========== */
+.titulo-seccion {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 10 0;
+}
+
+/* ========== ETIQUETAS ESPECIALES ========== */
+#lblNombreCuenta {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 10 0;
 }

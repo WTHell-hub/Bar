@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClicked" prefHeight="80.0" prefWidth="220.0" styleClass="card-carrito" stylesheets="@../../styles/Cards.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Bar.view.InterfazPrincipal.PanelProductos.ProductoController">
+   <children>
+      <VBox prefHeight="65.0" prefWidth="102.0" styleClass="card-carrito" stylesheets="@../../styles/Cards.css" HBox.hgrow="ALWAYS">
+         <children>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="lblNombre" styleClass="lblNombre" text="Nombre">
+                     <font>
+                        <Font name="Book Antiqua" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="lblCantidad" styleClass="lblCantidad" text="Cantidad">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="lblCategoria" styleClass="lblCategoria" text="Categoria">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="56.0" prefWidth="92.0">
+               <children>
+                  <Label fx:id="lblPrecio" styleClass="lblPrecio" text="Precio">
+                     <font>
+                        <Font name="Book Antiqua Bold Italic" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
+   </children>
+</HBox>

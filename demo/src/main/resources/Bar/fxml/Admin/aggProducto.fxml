@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="305.0" styleClass="card-producto-categoria1" stylesheets="@../../styles/Cards.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CONTROLLER_NAME">
+   <children>
+      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="66.0" prefWidth="438.0" spacing="20.0" styleClass="kpi-card-4">
+               <children>
+                  <Label styleClass="titulo-seccion" stylesheets="@../../styles/Cards.css" text="Nombre">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <TextField promptText="Ingrese el nombre" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="66.0" prefWidth="438.0" spacing="20.0" styleClass="kpi-card-4">
+               <children>
+                  <Label styleClass="titulo-seccion" stylesheets="@../../styles/Cards.css" text="Cantidad">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <TextField promptText="Ingrese la cantidad" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="66.0" prefWidth="438.0" spacing="20.0" styleClass="kpi-card-4">
+               <children>
+                  <Label styleClass="titulo-seccion" stylesheets="@../../styles/Cards.css" text="Precio">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <TextField promptText="Ingrese el precio" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="66.0" prefWidth="438.0" spacing="20.0" styleClass="kpi-card-4">
+               <children>
+                  <Label styleClass="titulo-seccion" stylesheets="@../../styles/Cards.css" text="Categoría">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <TextField promptText="Ingrese la categoría" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</AnchorPane>
